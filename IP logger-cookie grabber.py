@@ -18,24 +18,18 @@ import logging
 from datetime import datetime
 import requests
 
-# Initialize logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Global AES Key for Encryption/Decryption
 AES_KEY = get_random_bytes(32)
 
-# RSA key pair for public/private encryption
 private_key = RSA.generate(2048)
 public_key = private_key.publickey()
 
-# ECC key pair for asymmetric encryption
 ecc_private_key = ECC.generate(curve='P-256')
 ecc_public_key = ecc_private_key.public_key()
 
-# Global storage for malware signatures (simulated)
 malware_signatures = ["5d41402abc4b2a76b9719d911017c592", "098f6bcd4621d373cade4e832627b4f6"]
 
-# Port scanner with banner grabbing, service detection, and multi-host support
 def advanced_port_scanner(target_ips, start_port, end_port):
     logging.info(f"Advanced scanning {target_ips} for open ports and services between {start_port} and {end_port}...")
 
@@ -77,7 +71,6 @@ def advanced_port_scanner(target_ips, start_port, end_port):
     for target_ip in target_ips:
         scan_ip(target_ip)
 
-# RSA encryption and decryption
 def rsa_encrypt_message(message, public_key):
     logging.info("Encrypting message using RSA...")
     cipher_rsa = public_key.encrypt(message.encode('utf-8'), 32)
@@ -90,7 +83,6 @@ def rsa_decrypt_message(ciphertext, private_key):
     logging.info("Message decrypted successfully.")
     return decrypted_message.decode('utf-8')
 
-# ECC digital signatures
 def ecc_sign_message(message, private_key):
     logging.info("Signing message with ECC...")
     h = SHA256.new(message.encode('utf-8'))
@@ -109,7 +101,6 @@ def ecc_verify_signature(message, signature, public_key):
         logging.error("Signature is invalid.")
         return False
 
-# Simulated malware signature checking
 def malware_signature_check(file_path):
     logging.info(f"Checking {file_path} for malware signatures...")
     file_hash = hashlib.md5(open(file_path, 'rb').read()).hexdigest()
@@ -119,7 +110,6 @@ def malware_signature_check(file_path):
     else:
         logging.info(f"No malware detected in {file_path}.")
 
-# ICMP Ping Sweep for live host discovery
 def ping_sweep(subnet):
     logging.info(f"Starting ICMP Ping Sweep for subnet {subnet}")
     for ip in range(1, 255):
@@ -131,20 +121,17 @@ def ping_sweep(subnet):
             logging.debug(f"{target_ip} is not reachable.")
 
 if __name__ == "__main__":
-    # IPs to scan
+    
     target_ips = ['127.0.0.1', '192.168.1.1']
 
-    # Advanced port scanner
     start_time = time.time()
     advanced_port_scanner(target_ips, 1, 1024)
     logging.info(f"Port scanning completed in {time.time() - start_time:.2f} seconds.\n")
 
-    # RSA Encryption/Decryption example
     encrypted_message = rsa_encrypt_message("This is a secret message", public_key)
     decrypted_message = rsa_decrypt_message(encrypted_message, private_key)
     logging.info(f"Decrypted message: {decrypted_message}")
 
-    # ECC Signing/Verification example
     signature = ecc_sign_message("This message needs to be signed", ecc_private_key)
     is_valid = ecc_verify_signature("This message needs to be signed", signature, ecc_public_key)
     logging.info(f"ECC signature valid: {is_valid}")
