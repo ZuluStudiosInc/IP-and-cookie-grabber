@@ -19,27 +19,20 @@ from datetime import datetime
 import requests
 from threading import Lock
 
-# Initialize logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Global AES Key for Encryption/Decryption
 AES_KEY = get_random_bytes(32)
 
-# RSA key pair for public/private encryption
 private_key = RSA.generate(2048)
 public_key = private_key.publickey()
 
-# ECC key pair for asymmetric encryption
 ecc_private_key = ECC.generate(curve='P-256')
 ecc_public_key = ecc_private_key.public_key()
 
-# Global storage for malware signatures (simulated)
 malware_signatures = ["5d41402abc4b2a76b9719d911017c592", "098f6bcd4621d373cade4e832627b4f6"]
 
-# Storage for file hashes for File Integrity Monitoring
 file_hashes = {}
 
-# Port scanner with banner grabbing, service detection, and multi-host support
 def advanced_port_scanner(target_ips, start_port, end_port):
     logging.info(f"Advanced scanning {target_ips} for open ports and services between {start_port} and {end_port}...")
 
@@ -81,7 +74,6 @@ def advanced_port_scanner(target_ips, start_port, end_port):
     for target_ip in target_ips:
         scan_ip(target_ip)
 
-# Multi-threaded Vulnerability Scanner
 def vulnerability_scanner(target_ips):
     logging.info("Starting multi-threaded vulnerability scanning...")
 
@@ -90,7 +82,7 @@ def vulnerability_scanner(target_ips):
     def scan_for_vulnerabilities(ip):
         for cve in common_vulnerabilities:
             logging.info(f"Checking {ip} for {cve}...")
-            time.sleep(0.5)  # Simulate time for scanning
+            time.sleep(0.5)  
             logging.info(f"{ip} is not vulnerable to {cve}.")
 
     threads = []
@@ -104,7 +96,6 @@ def vulnerability_scanner(target_ips):
 
     logging.info("Vulnerability scanning completed.")
 
-# File Integrity Monitoring (FIM)
 def file_integrity_monitor(file_paths):
     logging.info("Starting file integrity monitoring...")
 
@@ -131,7 +122,6 @@ def file_integrity_monitor(file_paths):
 
     logging.info("File integrity monitoring completed.")
 
-# RSA encryption and decryption
 def rsa_encrypt_message(message, public_key):
     logging.info("Encrypting message using RSA...")
     cipher_rsa = public_key.encrypt(message.encode('utf-8'), 32)
@@ -144,7 +134,6 @@ def rsa_decrypt_message(ciphertext, private_key):
     logging.info("Message decrypted successfully.")
     return decrypted_message.decode('utf-8')
 
-# ECC digital signatures
 def ecc_sign_message(message, private_key):
     logging.info("Signing message with ECC...")
     h = SHA256.new(message.encode('utf-8'))
@@ -163,7 +152,6 @@ def ecc_verify_signature(message, signature, public_key):
         logging.error("Signature is invalid.")
         return False
 
-# Heuristic-based Malware Detection
 def advanced_malware_detection(file_path):
     logging.info(f"Running heuristic analysis on {file_path}...")
     file_hash = hashlib.md5(open(file_path, 'rb').read()).hexdigest()
@@ -172,7 +160,6 @@ def advanced_malware_detection(file_path):
         return True
     else:
         logging.info(f"No known malware found in {file_path}. Running further heuristic analysis...")
-        # Simulate heuristic analysis
         suspicious_patterns = ["exec", "bin/sh"]
         with open(file_path, 'r') as f:
             content = f.read()
@@ -182,7 +169,6 @@ def advanced_malware_detection(file_path):
         logging.info(f"No malware detected in {file_path}.")
         return False
 
-# ICMP Ping Sweep for live host discovery
 def ping_sweep(subnet):
     logging.info(f"Starting ICMP Ping Sweep for subnet {subnet}")
     for ip in range(1, 255):
@@ -194,30 +180,23 @@ def ping_sweep(subnet):
             logging.debug(f"{target_ip} is not reachable.")
 
 if __name__ == "__main__":
-    # IPs to scan
     target_ips = ['127.0.0.1', '192.168.1.1']
 
-    # Advanced port scanner
     start_time = time.time()
     advanced_port_scanner(target_ips, 1, 1024)
     logging.info(f"Port scanning completed in {time.time() - start_time:.2f} seconds.\n")
 
-    # Vulnerability Scanner
     vulnerability_scanner(target_ips)
 
-    # RSA Encryption/Decryption example
     encrypted_message = rsa_encrypt_message("This is a secret message", public_key)
     decrypted_message = rsa_decrypt_message(encrypted_message, private_key)
     logging.info(f"Decrypted message: {decrypted_message}")
 
-    # ECC Signing/Verification example
     signature = ecc_sign_message("This message needs to be signed", ecc_private_key)
     is_valid = ecc_verify_signature("This message needs to be signed", signature, ecc_public_key)
     logging.info(f"ECC signature valid: {is_valid}")
 
-    # File Integrity Monitoring example
-    monitored_files = ['file1.txt', 'file2.txt']  # Replace with actual file paths
+    monitored_files = ['file1.txt', 'file2.txt']  
     file_integrity_monitor(monitored_files)
 
-    # Heuristic Malware Detection example
-    advanced_malware_detection('suspicious_file.txt')  # Replace with actual file path
+    advanced_malware_detection('suspicious_file.txt')  
